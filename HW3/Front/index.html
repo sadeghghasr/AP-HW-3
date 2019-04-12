@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Noghteh-Khat</title>
+	<style>
+		.noghte{
+			background: black;
+			width:2vw;
+			height: 2vh;
+			border-radius: 50%; 
+		}
+		
+		.khat{
+			width: 5vw;
+			height: 0.8vh;
+			margin: 0.6vh 0vw 0vh 0vw;
+		/*	background-color: blue;*/
+
+		}
+
+
+		.vertical_khat{
+			width: 0.7vw;
+			height: 5vh;
+			margin: 2vh 0.5vw 0vh 0.7vw;
+		/*	background-color:white;*/
+			
+
+		}
+	
+		.square{
+			width: 5vw;
+			height:5vh;
+		/*	background-color:white ;*/
+			margin-top: 0.6vh;
+		}
+		
+	</style>
+	
+</head>
+<body onclick="getID(this.id);">
+	<div id="getInformation" style="height: 200vh; width: 50vw; display: contents">
+		<div style="margin: 10vh 25vw 20vh 24vw">
+			<div style="border: 2px solid red; border-radius: 10%; width: 50vw; font-size: 3vw">
+				<form style="margin-left: 2vw">
+					Enter Number of Horizontl Dots:<br>
+					<input id="get_width" style="width: 30vw ;height: 3vw; font-size: 2vw" type="text">
+					<br>
+					Enter Number of Vertical Dots : <br>
+					<input id="get_height" style="width: 30vw ;height: 3vw; font-size: 2vw" type="text">
+					<br>
+					Enter Name of Blue Player : <br>
+					<input id="blueP" style="width: 30vw ;height: 3vw; font-size: 2vw" type="text">
+					<br>
+					Enter Name of Red Player : <br>
+					<input id="redP" style="width: 30vw ;height: 3vw; font-size: 2vw" type="text">
+					<br>
+					<input style="margin-bottom: 1vw; height: 4vw" type="button" value="Make Game-Map" onclick="MakeMap()">
+				  </form> 
+
+			</div>
+		</div>
+		</div> 
+		
+	<div id="score_board" style="display: none">
+		<p id="Turn" style="color:black ;font-size: 5vh ">
+			Turn :  Blue
+		</p>
+		<p id="Rscore" style="color: red ;font-size: 5vh ">
+			Red Score : 0
+		</p>
+		<p id="Bscore" style="color: blue; font-size: 5vh">
+			Blue Score : 0
+		</p>
+	
+	</div>
+	<div id="finish" style="height: 12vh; width: 25vw; display: none;margin:0vh 10vw 0vh 10vw; padding: 10vh 10vw 20vh 10vw; font-style: italic;font-weight: bold; font-size: 3vw; font-family: monospace; border :2px solid orchid; border-radius: 10%">
+		
+		</div> 
+<div id="main-rectangle" style="display: none ; margin-left: 20vw; margin-right : 15%; border: 5px dashed rgb(0, 255, 179); padding: 0.5vh">
+<!--	
+	<div style="font-size: 0; display: inline-flex; width: 100%; height:7vh; margin-top: 0vh; padding: 0vh">
+		<div class="noghte">
+			<div id="vn0"  style="background-color: white;" class="vertical_khat" onclick="makeline(this.id)">
+			
+			</div>
+		</div>
+		<div>
+			<div id="hn0" class="khat" onclick="makeline(this.id)">
+			</div>
+			<div class="square"></div>
+		</div>
+		<div class="noghte">
+			<div id="vn2" class="vertical_khat" onclick="makeline(this.id)">
+			
+			</div>
+		</div>
+		<div id="hn2" class="khat" onclick="makeline(this.id)">
+			
+		</div>
+		<div class="noghte">
+		
+			<div id="vn3" class="vertical_khat" onclick="makeline(this.id)">
+			
+			</div>
+		</div>
+		<div id="hn3" class="khat" onclick="makeline(this.id)">
+			
+		</div>
+		<div class="noghte">
+  			<div id="vn4" class="vertical_khat" onclick="makeline(this.id)">
+		
+			</div>
+		</div>
+			
+	</div>
+	<div style="font-size: 0vh; display: inline-flex; width: 100%; height: 7vh;margin-top: 0vh;padding: 0vh">
+			<div class="noghte" style="display: inline-block">
+				<div id="vn5" class="vertical_khat" onclick="makeline(this.id)">
+				
+				</div>
+			</div>
+			<div id="hn4" class="khat" onclick="makeline(this.id)">
+				
+			</div>
+			<div class="noghte">
+				<div id="vn6" class="vertical_khat" onclick="makeline(this.id)">
+				
+				</div>
+			</div>
+			<div  id="hn5" class="khat" onclick="makeline(this.id)">
+				
+			</div>
+			<div class="noghte">
+			
+				<div id="vn7" class="vertical_khat" onclick="makeline(this.id)">
+				
+				</div>
+			</div>
+			<div id="hn6" class="khat" onclick="makeline(this.id)">
+				
+			</div>
+			<div class="noghte">
+				<div id="vn8" class="vertical_khat" onclick="makeline(this.id)">
+			
+				</div>
+			</div>
+	</div>
+-->
+</div> 
+	<script>
+		var x=1;	
+		var blue_score =0 ;
+		var red_score= 0;
+		var numberOfHorKhat = 0;
+		var numberOfSquare = 0;
+		var numsquare = 0;
+		var H_Dots =0;
+		var V_Dots =0;
+		var TOTAL = 0;
+		function MakeMap(){
+			V_Dots = document.getElementById("get_height").value;
+			H_Dots = document.getElementById("get_width").value;
+			TOTAL = (V_Dots - 1) * (H_Dots -1);
+			console.log("dfsd" +TOTAL);
+			var TT = document.getElementById("getInformation");
+			TT.style.display = "none";
+			var TY = document.getElementById("score_board");
+			TY.style.display = "contents";
+			var TZ = document.getElementById("main-rectangle");
+			TZ.style.display = "block";
+			console.log(V_Dots);
+
+			for(var i =0 ; i <V_Dots ; i++)
+			{
+				var div_ertefa = document.createElement("div");
+				div_ertefa.id = "radif" + i;
+				div_ertefa.style.fontSize = "0";
+				div_ertefa.style.display = "inline-flex";
+				div_ertefa.style.width = "100%";
+				div_ertefa.style.height = "7vh";
+				div_ertefa.style.marginTop = "0vh";
+				div_ertefa.style.padding = "0vh";
+				document.getElementById("main-rectangle").appendChild(div_ertefa);
+				for(var j=0 ; j <H_Dots ; j++)
+				{
+					var noghat = document.createElement("div");
+					noghat.id = "noghte "  + ((H_Dots*i) + j);
+					noghat.setAttribute('class', 'noghte');
+					document.getElementById("radif" + i).appendChild(noghat);
+					if(i != (V_Dots -1))
+					{
+					var ver_khat = document.createElement("div");
+					ver_khat.id = "vn" + ((H_Dots * i) + j);
+					ver_khat.setAttribute('class', 'vertical_khat');
+					ver_khat.style.backgroundColor = "white";
+					ver_khat.onmouseover = function() {mouseOver(ver_khat.id)};
+					ver_khat.onmouseout = function() {mouseOut(ver_khat.id)};
+					ver_khat.onclick = function(){makeline(ver_khat.id)};
+					document.getElementById("noghte "  + ((H_Dots*i) + j)).appendChild(ver_khat);
+					}
+					if(j != (H_Dots-1))
+					{
+						var test = document.createElement("div");
+						test.id = "test" + numberOfHorKhat;
+						test.style.display = "inline-block";
+						document.getElementById("radif" + i).appendChild(test);
+						var hor_khat = document.createElement("div");
+						hor_khat.id = numberOfHorKhat;
+						hor_khat.style.backgroundColor = "white";
+						hor_khat.onmouseover = function() {mouseOver(hor_khat.id)};
+						hor_khat.onmouseout = function() {mouseOut(hor_khat.id)};
+						document.getElementById("test" + numberOfHorKhat).appendChild(hor_khat);
+						hor_khat.setAttribute('class', 'khat');
+						hor_khat.onclick = function(){makeline(hor_khat.id)};
+						if(i != (V_Dots-1))
+						{
+							var squares = document.createElement("div");
+							squares.setAttribute('class', 'square');
+							squares.id = "SQ" + numberOfSquare;
+							squares.style.backgroundColor = "white"
+							document.getElementById("test" + numberOfHorKhat).appendChild(squares);
+							numberOfSquare++;
+						}
+						numberOfHorKhat++;
+					}
+				}
+
+			}
+	}
+
+		function reset(e)
+		{
+			x--;
+			var r = getID(e.id);
+			document.getElementById(r).style.backgroundColor='white' ;
+			console.log(x);
+		}
+
+		function makeline(e)
+		{
+			
+			var r = getID(e.id);
+			
+			var TURN = 0;
+
+			if(x % 2 == 1 && document.getElementById(r).style.backgroundColor=='gray' ){
+				x++;
+				document.getElementById(r).style.backgroundColor='blue';
+				console.log(x);
+				console.log(document.getElementById(r).style.backgroundColor);
+				console.log(numberOfSquare);
+				TURN = "Red";
+				for(var o = 0; o < (V_Dots-1); o++)
+				{
+				for(var y = (H_Dots-1) * o ; y < ((H_Dots-1) * (o+1)) ; y++)
+				{
+					
+					var down = y + (H_Dots-1);
+									
+					var b = y + o;
+					var a = b + 1;
+					if((document.getElementById(""+ y).style.backgroundColor != "white") && (document.getElementById(""+down).style.backgroundColor != "white") &&
+					(document.getElementById("vn"+ b ).style.backgroundColor != "white") && (document.getElementById("vn"+a).style.backgroundColor != "white")
+					&& (document.getElementById("SQ" + y).style.backgroundColor == "white")) 
+					{
+						document.getElementById("SQ" + y).style.backgroundColor = "blue";
+						blue_score++;
+						x--;
+						TURN = "Blue";
+						console.log("blue score : " + blue_score);
+						document.getElementById("Bscore").innerHTML = "Blue Score : " + blue_score;
+						numsquare++;
+						var TM = document.getElementById("finish");
+						var TD = document.getElementById("main-rectangle");
+						if(numsquare == (H_Dots -1)*(V_Dots -1) && red_score < blue_score){
+							TD.style.display = "none";
+							TM.innerHTML = "Blue Player Wins ....!!"
+							TM.style.display = "block";
+						}
+						else if(numsquare == (H_Dots -1)*(V_Dots -1) && red_score > blue_score){
+							TD.style.display = "none";
+							TM.innerHTML = "Red Player Wins ....!!"
+							TM.style.display = "block";
+						}
+						else if(numsquare == (H_Dots -1)*(V_Dots -1) && red_score == blue_score){
+							TD.style.display = "none";
+							TM.innerHTML = "WoW.... Draw ....!!"
+							TM.style.display = "block";
+						}
+
+					}
+					
+				}
+				}
+				document.getElementById("Turn").innerHTML = "Turn : " + TURN;
+			//	document.getElementById("SQ" + r).style.backgroundColor = "blue";
+			}
+			else if(x % 2 == 0 && document.getElementById(r).style.backgroundColor=='gray')
+			{
+				x++;
+				TURN = "Blue";
+				document.getElementById(r).style.backgroundColor='red';	
+				console.log(x);
+				console.log(document.getElementById(r).style.backgroundColor);
+				console.log(numberOfSquare);
+				for(var o = 0; o < (V_Dots-1); o++)
+				{
+				for(var y = (H_Dots-1) * o ; y < ((H_Dots-1) * (o+1)) ; y++)
+				{
+					
+					var down = y + (H_Dots-1);
+									
+					var b = y + o;
+					var a = b + 1;
+					if((document.getElementById(""+ y).style.backgroundColor != "white") && (document.getElementById(""+down).style.backgroundColor != "white") &&
+					(document.getElementById("vn"+ b ).style.backgroundColor != "white") && (document.getElementById("vn"+a).style.backgroundColor != "white") 
+					&& (document.getElementById("SQ" + y).style.backgroundColor == "white")) 
+					{
+						document.getElementById("SQ" + y).style.backgroundColor = "red";
+						red_score++;
+						x--;
+						
+						TURN = "Red";
+						console.log("red score : " + red_score);
+						document.getElementById("Rscore").innerHTML = "Red Score : " + red_score;
+						numsquare++;
+ 						var TL = document.getElementById("finish");
+						var TE = document.getElementById("main-rectangle");
+						if(numsquare == (H_Dots -1)*(V_Dots -1) && red_score < blue_score){
+							TE.style.display = "none";
+							TL.innerHTML = "Blue Player Wins ....!!"
+							TL.style.display = "block";
+						}
+						else if(numsquare == (H_Dots -1)*(V_Dots -1) && red_score > blue_score){
+							TE.style.display = "none";
+							TL.innerHTML = "Red Player Wins ....!!"
+							TL.style.display = "block";
+						}
+						else if(numsquare == (H_Dots -1)*(V_Dots -1) && red_score == blue_score){
+							TE.style.display = "none";
+							TL.innerHTML = "WoW.... Draw ....!!"
+							TL.style.display = "block";
+						}
+
+					}
+					
+				}
+				}
+				document.getElementById("Turn").innerHTML = "Turn : " + TURN ;
+				
+			//	document.getElementById("SQ" + r).style.backgroundColor = "red";
+			}
+			console.log("new x : " + x);
+		/*	if(numsquare == (H_Dots -1)*(V_Dots -1) && red_score > blue_score)
+			{
+				alert("Red-Player Wins ....!")
+			}
+			else if( numsquare == (H_Dots -1)*(V_Dots -1)  && red_score < blue_score)
+			{
+				alert("Blue-Player Wins ....!")
+			}
+			else if(numsquare == (H_Dots -1)*(V_Dots -1) && red_score == blue_score) 
+			{
+				alert("WoW .... Draw ....!")
+			}
+		*/	
+			
+		}
+
+		function mouseOver(e) {
+			var r = getID(e.id);
+			if(document.getElementById(r).style.backgroundColor == "white")
+			{
+				document.getElementById(r).style.backgroundColor = "gray"
+			}
+		}
+
+		function mouseOut(e) {
+			var r = getID(e.id);
+			if(document.getElementById(r).style.backgroundColor == "gray")
+			{
+				document.getElementById(r).style.backgroundColor = "white";
+			}
+		}
+
+		function getID(e)
+		{
+			e = e ||window.event;
+			e = e.target || e.srcElement;
+			console.log("ID : " + e.id);
+			return e.id;
+		}
+
+		function change()
+		{
+			document.getElementById('sina').innerHTML = 'Hello JS World';
+			document.getElementById('sad').innerHTML = 'Hello sad';
+			let vari = document.getElementById('meText').value;
+			console.log(vari);
+
+		}
+	</script>
+</body>
+
+</html>

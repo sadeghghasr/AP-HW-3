@@ -1,0 +1,17 @@
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -c
+LXXFLAGS = -std=c++17
+OBJECTS = main.o human.o oracle.o
+TARGET = main
+
+
+$(TARGET): $(OBJECTS)
+	$(CXX) $(LXXFLAGS) $(OBJECTS) -o $(TARGET)
+main.o: main.cpp
+	$(CXX) $(CXXFLAGS) main.cpp
+human.o: human.h human.cpp
+	$(CXX) $(CXXFLAGS) human.cpp
+Oracle.o: oracle.h oracle.cpp
+	$(CXX) $(CXXFLAGS) oracle.cpp
+clean:
+	rm -f $(TARGET) $(OBJECTS)
